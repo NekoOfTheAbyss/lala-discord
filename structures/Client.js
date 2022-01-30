@@ -10,8 +10,7 @@ class Client extends Eris.Client {
         this.dispatcher = new Dispatcher(this)
         this.registry = new Registry(this)
         this.on('interactionCreate', interaction => {
-            console.log(this.dispatcher.handle(interaction))
-
+            this.dispatcher.handle(interaction)
         })
     }
 }
