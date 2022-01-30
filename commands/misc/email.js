@@ -9,7 +9,7 @@ module.exports = class EmailCommand extends Command {
       description: "Generate a random email ID.",
       group: "misc",
       options: [{
-        type: 4,
+        type: 5,
         name: "common",
         required: true,
         description: "Use a common email instead of a random one?",
