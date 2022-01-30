@@ -1,0 +1,8 @@
+{
+	"dependencies": {
+		"@nekooftheabyss/lala": "^1.2.1",
+		"eris": "^0.16.1",
+		"node-fetch": "2.6",
+		"require-all": "^3.0.0"
+	}
+}
