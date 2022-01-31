@@ -30,7 +30,7 @@ const client = new Client(config.Discord, {
     ],
 });
 
-client.registry.registerCommands(__dirname + "/commands/")
+client.registry.registerCommands(__dirname + "/commands/") //.then(x => client.registry.reRegisterAll())
 console.log(client.registry.commands.map(x => x.name))
 
 client.connect()

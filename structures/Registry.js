@@ -10,6 +10,9 @@ class Registry {
     this.client = client;
     this.commands = new Collection("Commands");
   }
+  async reRegisterAll() {
+    this.updateCommands(this.commands.array())
+  }
   async registerCommands(dir) {
     const direc = fs.readdirSync(dir);
     for (const group of direc) {

@@ -2,10 +2,10 @@ const Command = require("../../structures/Command");
 const lala = require("@nekooftheabyss/lala");
 const resolveColor = require('../../util/Color')
 
-module.exports = class SmugCommand extends Command {
+module.exports = class MonsterCommand extends Command {
   constructor(client) {
     super(client, {
-      name: "name",
+      name: "monster",
       description: "Generate a random fantasy-like name!",
       group: "misc",
     });
