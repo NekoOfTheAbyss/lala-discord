@@ -1,9 +1,9 @@
-const fs = require("fs");
+import fs from "fs";
 const disURL =
   "https://discord.com/api/v8/applications/937353840490070057/commands";
-const { Collection } = require("@nekooftheabyss/lala");
-const fetch = require("node-fetch");
-const { Discord } = require("../config");
+import { Collection } from "@nekooftheabyss/lala";
+import fetch from "node-fetch";
+import { Discord } from "../config.js";
 
 class Registry {
   constructor(client) {
@@ -11,20 +11,24 @@ class Registry {
     this.commands = new Collection("Commands");
   }
   async reRegisterAll() {
-    this.updateCommands(this.commands.array())
+    this.updateCommands(this.commands.array());
   }
   async registerCommands(dir) {
     const direc = fs.readdirSync(dir);
     for (const group of direc) {
-      const commands = require("require-all")(`${dir}/${group}/`);
-      Object.values(commands).forEach((command) => {
+      const files = fs.readdirSync(`${dir}/${group}/`);
+      const commands = [];
+      for (const file of files) {
+        const command = await import(`${dir}/${group}/${file}`);
+        commands.push(command.default);
+      }
+      commands.forEach((command) => {
         const cmd = new command(this.client);
         this.commands.set(cmd.name, cmd);
       });
     }
-    const reg = await this.registerIfNot();
-    console.log(reg)
   }
+
   async updateCommand(command) {
     const cmdjson = command.json();
     const resp = await fetch(disURL, {
@@ -55,12 +59,12 @@ class Registry {
   async registerIfNot() {
     const registered = await this.fetchCommands();
     const regArray = registered.map((x) => x.name);
-    const toRegister = this.commands.filter((x) => !regArray.includes(x.name));
+    const toRegister = this.commands.filter((x) => !x.slash && !regArray.includes(x.name));
     if (toRegister.length > 0) {
-      const res = []
-      for(let cmd of toRegister) {
+      const res = [];
+      for (let cmd of toRegister) {
         await this.updateCommand(cmd);
-        res.push(toRegister)
+        res.push(toRegister);
       }
       return res;
     }
@@ -76,4 +80,4 @@ class Registry {
   }
 }
 
-module.exports = Registry;
+export default Registry

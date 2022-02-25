@@ -1,4 +1,4 @@
-const { Collection } = require("@nekooftheabyss/lala");
+import { Collection } from '@nekooftheabyss/lala';
 
 class Caller {
     constructor(client, data, message) {
@@ -8,7 +8,11 @@ class Caller {
         this.type = data.type;
         this.options = null;
         if(data.options)  {
-            this.options = data.options.reduce((acc,curr)=> (acc[curr.name]=curr.value,acc),{});
+            this.options = data.options.reduce((acc,curr)=> {
+                if(curr.type !== 1) acc[curr.name]=curr.value
+                else acc["subcommand"] = curr;
+                return acc
+            },{});
         };
         this.mentions = {
             users: new Collection("Mentioned Users"),
@@ -23,7 +27,7 @@ class Caller {
                 }
             }
         }
-        this.author = message.author;
+        this.author = message.user ? message.user : message.member.user;
     }
 }
-module.exports = Caller;
+export default Caller;

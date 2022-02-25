@@ -1,8 +1,7 @@
-const Command = require("../../structures/Command");
-const lala = require("@nekooftheabyss/lala");
-const resolveColor = require('../../util/Color')
+import Command from "../../structures/Command.js";
+import {owoify} from "@nekooftheabyss/lala";
 
-module.exports = class OWOCommand extends Command {
+export default class OWOCommand extends Command {
   constructor(client) {
     super(client, {
       name: "owoify",
@@ -18,21 +17,15 @@ module.exports = class OWOCommand extends Command {
   }
   async run(message, command) {
     const txt = command.options.text;
-    const response = lala.converter.owo(txt);
-    const embed = {
-      type: "rich",
-      color: resolveColor("#ff00c3"),
-      description: `\`${response}\``,
-      author: {
-        name: `${
-          message.user ? message.user.username : message.member.user.username
-        }'s text:`,
-        icon_url: message.user
-          ? message.user.avatarURL
-          : message.member.user.avatarURL,
-      },
-    };
+    const response = owoify(txt);
+    const embed = new this.client.util.Embed()
+      .setColor("#ff00c3")
+      .setDescription(`\`${response}\``)
+      .setAuthor(
+        `${command.author.username}'s text:`,
+        command.author.iconURL
+      );
 
-    return message.createMessage({ embeds: [embed] });
+    return message.createMessage({ embeds: [embed.json()] });
   }
 };

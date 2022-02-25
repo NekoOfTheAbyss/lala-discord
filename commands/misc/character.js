@@ -1,28 +1,23 @@
 import Command from "../../structures/Command.js";
 import lala from "@nekooftheabyss/lala";
 
-export default class EmailCommand extends Command {
+export default class CharacterCommand extends Command {
   constructor(client) {
     super(client, {
-      name: "email",
-      description: "Generate a random email ID.",
+      name: "character",
+      description: "Generate a weird fantasy character.",
       group: "misc",
-      options: [{
-        type: 5,
-        name: "common",
-        required: true,
-        description: "Use a common email instead of a random one?",
-      }],
     });
   }
   async run(message, command) {
-    const len = command.options.common;
-    const response = lala.random.genEmail(len);
+    let len = command.options.length;
+    if (len > 255) len = 255;
+    const response = lala.random.genCharacter();
     const embed = new this.client.util.Embed()
       .setColor("#ff00c3")
       .setDescription(`\`${response}\``)
       .setAuthor(
-        `${command.author.username}'s email:`,
+        `${command.author.username}'s character:`,
         command.author.iconURL
       );
 

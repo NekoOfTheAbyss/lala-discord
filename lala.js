@@ -1,5 +1,10 @@
-const Client = require("./structures/Client");
-const config = require("./config")
+import Client from "./structures/Client.js";
+import config from "./config.js"
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import fs from 'fs'
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 
 const client = new Client(config.Discord, {
     commandPrefix: "lala",
@@ -30,7 +35,18 @@ const client = new Client(config.Discord, {
     ],
 });
 
-client.registry.registerCommands(__dirname + "/commands/") //.then(x => client.registry.reRegisterAll())
-console.log(client.registry.commands.map(x => x.name))
+const eventFiles = fs.readdirSync(__dirname + "/events/");
+
+for (const file of eventFiles) {
+  const eventHandler = await import(`./events/${file}`);
+  const eventName = file.split(".")[0];
+  console.log(eventName)
+  console.log(eventHandler.default)
+  client.on(eventName, (...args) => eventHandler.default(client, ...args));
+}
+
+await client.registry.registerCommands(__dirname + "/commands/") 
+//console.log(await client.registry.reRegisterAll())
+//console.log(client.registry.commands.map(x => x.name))
 
 client.connect()

@@ -1,8 +1,7 @@
-const Command = require("../../structures/Command");
-const lala = require("@nekooftheabyss/lala");
-const resolveColor = require('../../util/Color')
+import Command from "../../structures/Command.js";
+import lala from "@nekooftheabyss/lala";
 
-module.exports = class BakaCommand extends Command {
+export default class BakaCommand extends Command {
   constructor(client) {
     super(client, {
       name: "story",
@@ -16,25 +15,19 @@ module.exports = class BakaCommand extends Command {
     });
   }
   async run(message, command) {
-    let response = lala.random.story();
+    let response = lala.random.genStory();
     if (command.options) {
       const user = command.mentions.users.get(command.options.user);
-      response = lala.random.story(user.username);
+      response = lala.random.genStory(user.username);
     }
-    const embed = {
-      type: "rich",
-      color: resolveColor("#ff00c3"),
-      description: `\`${response}\``,
-      author: {
-        name: `${
-          message.user ? message.user.username : message.member.user.username
-        }'s story:`,
-        icon_url: message.user
-          ? message.user.avatarURL
-          : message.member.user.avatarURL,
-      },
-    };
+    const embed = new this.client.util.Embed()
+      .setColor("#ff00c3")
+      .setDescription(`\`${response}\``)
+      .setAuthor(
+        `${command.author.username}'s story:`,
+        command.author.iconURL
+      );
 
-    return message.createMessage({ embeds: [embed] });
+    return message.createMessage({ embeds: [embed.json()] });
   }
 };

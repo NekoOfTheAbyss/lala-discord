@@ -35,4 +35,4 @@ class Command {
     return null;
   }
 }
-module.exports = Command;
+export default Command;

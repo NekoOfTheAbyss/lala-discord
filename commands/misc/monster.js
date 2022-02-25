@@ -1,8 +1,7 @@
-const Command = require("../../structures/Command");
-const lala = require("@nekooftheabyss/lala");
-const resolveColor = require('../../util/Color')
+import Command from "../../structures/Command.js";
+import lala from "@nekooftheabyss/lala";
 
-module.exports = class MonsterCommand extends Command {
+export default class MonsterCommand extends Command {
   constructor(client) {
     super(client, {
       name: "monster",
@@ -12,22 +11,16 @@ module.exports = class MonsterCommand extends Command {
   }
 
   async run(message, command) {
-    const response = lala.random.monster();
+    const response = lala.random.genMonster();
 
-    const embed = {
-      type: "rich",
-      color: resolveColor("#ff00c3"),
-      description: `\`${response}\``,
-      author: {
-        name: `${
-          message.user ? message.user.username : message.member.user.username
-        }'s requested name:`,
-        icon_url: message.user
-          ? message.user.avatarURL
-          : message.member.user.avatarURL,
-      },
-    };
+    const embed = new this.client.util.Embed()
+      .setColor("#ff00c3")
+      .setDescription(`\`${response}\``)
+      .setAuthor(
+        `${command.author.username}'s requested name:`,
+        command.author.iconURL
+      );
 
-    return message.createMessage({ embeds: [embed] });
+    return message.createMessage({ embeds: [embed.json()] });
   }
 };
