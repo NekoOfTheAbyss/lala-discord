@@ -10,8 +10,6 @@ export default class CharacterCommand extends Command {
     });
   }
   async run(message, command) {
-    let len = command.options.length;
-    if (len > 255) len = 255;
     const response = lala.random.genCharacter();
     const embed = new this.client.util.Embed()
       .setColor("#ff00c3")
