@@ -1,21 +1,21 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@nekooftheabyss/lala': 2.0.1
+  '@nekooftheabyss/lala': 2.1.2
   eris: ^0.16.1
   node-fetch: ~2.6.7
   require-all: ^3.0.0
 
 dependencies:
-  '@nekooftheabyss/lala': 2.0.1
+  '@nekooftheabyss/lala': 2.1.2
   eris: 0.16.1
   node-fetch: 2.6.7
   require-all: 3.0.0
 
 packages:
 
-  /@nekooftheabyss/lala/2.0.1:
-    resolution: {integrity: sha512-3SXujU5xWG75yDr9hpUuC0MOaq7oSpHlInMcAAcpkZhlpJLdgWmEZnD/lELkCu4Jw/tVzUsb5Sd+NIpjAuF2XQ==}
+  /@nekooftheabyss/lala/2.1.2:
+    resolution: {integrity: sha512-NrB5Fq3wzoGgR6Enz5t55YeVybkQ/ogerdN529TjTCbqc02wqRQYMVCI0RGt+CdwvDTUdPx9vYwbEUTLW/AXSg==}
     dev: false
 
   /eris/0.16.1:

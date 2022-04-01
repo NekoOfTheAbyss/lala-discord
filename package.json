@@ -1,7 +1,7 @@
 {
 	"type": "module",
 	"dependencies": {
-		"@nekooftheabyss/lala": "2.0.1",
+		"@nekooftheabyss/lala": "2.1.2",
 		"eris": "^0.16.1",
 		"node-fetch": "~2.6.7",
 		"require-all": "^3.0.0"
